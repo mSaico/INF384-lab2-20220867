@@ -81,3 +81,27 @@ def desglose(envio: Envio) -> dict[str, float]:
         "factor_zona": factor,
         "total": calcular(envio),
     }
+
+def calcular_descuento_corporativo(cantidad_despachos: int, es_cliente_premium: bool) -> float:
+    """
+    Calcula un descuento especial basado en el volumen histórico.
+    """
+    descuento = 0.0
+    
+    if cantidad_despachos < 0:
+        raise ValueError("La cantidad no puede ser negativa")
+        
+    if cantidad_despachos >= 100:
+        descuento = 0.15
+    elif cantidad_despachos >= 50:
+        descuento = 0.10
+    elif cantidad_despachos >= 10:
+        descuento = 0.05
+        
+    if es_cliente_premium:
+        descuento += 0.05
+        
+    if descuento > 0.25:
+        descuento = 0.25
+        
+    return descuento
